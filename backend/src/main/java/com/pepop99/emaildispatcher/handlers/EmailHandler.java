@@ -1,6 +1,5 @@
 package com.pepop99.emaildispatcher.handlers;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -11,7 +10,7 @@ public class EmailHandler extends BaseHandler {
         final String uri = httpServletRequest.getRequestURI();
         System.out.println(uri);
         switch (uri) {
-            case(""): {
+            case (""): {
 
             }
         }

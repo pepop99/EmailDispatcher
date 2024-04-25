@@ -22,7 +22,7 @@ public class Servlet {
 
     public static void main(String[] args) throws Exception {
         initialiseJettyServer();
-        System.out.println("Hello world!");
+        System.out.println("Server initialised, now accepting connections...");
     }
 
     private static void initialiseJettyServer() throws Exception {
@@ -39,6 +39,7 @@ public class Servlet {
         httpConfig.setSendServerVersion(false);
         try (ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(httpConfig))) {
             http.setPort(PORT);
+            http.setIdleTimeout(900000);
             server.setConnectors(new Connector[]{http});
         }
         server.setHandler(contexts);
