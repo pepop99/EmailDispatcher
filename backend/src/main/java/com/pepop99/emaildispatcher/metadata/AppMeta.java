@@ -2,6 +2,7 @@ package com.pepop99.emaildispatcher.metadata;
 
 import com.pepop99.emaildispatcher.exceptions.DuplicateEmailException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class AppMeta {
     private AppMeta() {
     }
 
-    private final Set<BaseMeta> meta = new HashSet<>();
+    public final Set<BaseMeta> meta = new HashSet<>();
 
     public void insertNonProfitMeta(String email, String name, String address) throws DuplicateEmailException {
         validateEmail(email);
@@ -30,5 +31,21 @@ public class AppMeta {
         if (meta.contains(new BaseMeta(email))) {
             throw new DuplicateEmailException("Email already associated");
         }
+    }
+
+    public void getAllNonProfits(ArrayList<NonProfitMeta> list) {
+        meta.forEach(baseMeta -> {
+            if (baseMeta instanceof NonProfitMeta) {
+                list.add((NonProfitMeta) baseMeta);
+            }
+        });
+    }
+
+    public void getAllFoundations(ArrayList<FoundationMeta> list) {
+        meta.forEach(baseMeta -> {
+            if (baseMeta instanceof FoundationMeta) {
+                list.add((FoundationMeta) baseMeta);
+            }
+        });
     }
 }

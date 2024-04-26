@@ -2,10 +2,13 @@ package com.pepop99.emaildispatcher.handlers;
 
 import com.pepop99.emaildispatcher.exceptions.DuplicateEmailException;
 import com.pepop99.emaildispatcher.metadata.AppMeta;
+import com.pepop99.emaildispatcher.metadata.FoundationMeta;
+import com.pepop99.emaildispatcher.metadata.NonProfitMeta;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MetadataHandler extends BaseHandler {
     @Override
@@ -33,6 +36,16 @@ public class MetadataHandler extends BaseHandler {
                     return;
                 }
                 respond("Saved foundation meta", httpServletResponse, 200);
+            }
+            case (APIHandlerConstants.URI_LIST_ALL_NON_PROFITS) -> {
+                final ArrayList<NonProfitMeta> list = new ArrayList<>();
+                AppMeta.instance.getAllNonProfits(list);
+                respond(list.toString(), httpServletResponse, 200);
+            }
+            case (APIHandlerConstants.URI_LIST_ALL_FOUNDATIONS) -> {
+                final ArrayList<FoundationMeta> list = new ArrayList<>();
+                AppMeta.instance.getAllFoundations(list);
+                respond(list.toString(), httpServletResponse, 200);
             }
             default -> respond("Invalid request", httpServletResponse, 404);
         }

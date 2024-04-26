@@ -1,7 +1,10 @@
 package com.pepop99.emaildispatcher.metadata;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class BaseMeta {
     private final String email;
 
