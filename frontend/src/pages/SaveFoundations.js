@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import './form.css';
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 const SaveFoundations = () => {
     const [email, setEmail] = useState('');
 
@@ -12,7 +13,7 @@ const SaveFoundations = () => {
     };
 
     const saveFoundation = () => {
-        axios.get(`http://localhost:8080/meta/save/fd?e=${email}`)
+        axios.get(`${API_ENDPOINT}/meta/save/fd?e=${email}`)
             .then(response => {
                 if (response.status === 200) {
                     toast.success("Foundation saved!");

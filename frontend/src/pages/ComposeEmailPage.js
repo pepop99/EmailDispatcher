@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import DropDown from '../components/dropdown';
 import axios from 'axios';
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const ComposeEmailPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +29,7 @@ const ComposeEmailPage = () => {
     const sendEmail = () => {
         var config = {
             method: 'post',
-            url: 'http://localhost:8080/email/send',
+            url: `${API_ENDPOINT}/email/send`,
             headers: {
                 'Content-Type': 'text/plain'
             },
@@ -55,10 +57,10 @@ const ComposeEmailPage = () => {
             <h2>Compose Email Page</h2>
             <form onSubmit={handleSubmit}>
                 <label>Foundation:</label>
-                <DropDown url={"http://localhost:8080/meta/read/fd"} label={"email"} isMulti={false} selectedOptions={selectedFoundation} setSelectedOptions={setSelectedFoundation} />
+                <DropDown url={`${API_ENDPOINT}/meta/read/fd`} label={"email"} isMulti={false} selectedOptions={selectedFoundation} setSelectedOptions={setSelectedFoundation} />
                 <br />
                 <label>Non-Profits:</label>
-                <DropDown url={"http://localhost:8080/meta/read/np"} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={setSelectedNonProfits} />
+                <DropDown url={`${API_ENDPOINT}/meta/read/np`} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={setSelectedNonProfits} />
                 <br />
                 <button type="submit" onClick={onSubmit}>Send Email</button>
             </form>

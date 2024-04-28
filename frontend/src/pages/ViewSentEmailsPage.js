@@ -4,7 +4,7 @@ import DropDown from '../components/dropdown';
 import axios from 'axios';
 import Table from '../components/table';
 
-
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 const ViewSentEmailsPage = () => {
     const [selectedNonProfits, setSelectedNonProfits] = useState([]);
     const handleSetSelectedNonProfits = (data) => {
@@ -29,7 +29,7 @@ const ViewSentEmailsPage = () => {
     const getEmails = () => {
         var config = {
             method: 'post',
-            url: 'http://localhost:8080/email/view',
+            url: `${API_ENDPOINT}/email/view`,
             headers: {
                 'Content-Type': 'text/plain'
             },
@@ -55,7 +55,7 @@ const ViewSentEmailsPage = () => {
             <h2>View Sent Emails</h2>
             <form onSubmit={handleSubmit}>
                 <label>Non-Profits:</label>
-                <DropDown url={"http://localhost:8080/meta/read/np"} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={handleSetSelectedNonProfits} />
+                <DropDown url={`${API_ENDPOINT}/meta/read/np`} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={handleSetSelectedNonProfits} />
                 <br />
                 <button type="submit" onClick={onSubmit}>View</button>
             </form>

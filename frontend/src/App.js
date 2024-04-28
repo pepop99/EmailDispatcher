@@ -16,7 +16,7 @@ const App = () => {
   const viewSentEmailsPath = "/viewSentEmails";
   return (
     <div>
-      <Router>
+      <Router basename='EmailDispatcher'>
         <div>
           <nav>
             <ul>

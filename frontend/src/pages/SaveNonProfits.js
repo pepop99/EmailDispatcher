@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import './form.css';
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 const SaveNonProfits = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -14,7 +15,7 @@ const SaveNonProfits = () => {
     };
 
     const SaveNonProfit = () => {
-        axios.get(`http://localhost:8080/meta/save/np?e=${email}&n=${name}&a=${address}`)
+        axios.get(`${API_ENDPOINT}/meta/save/np?e=${email}&n=${name}&a=${address}`)
             .then(response => {
                 if (response.status === 200) {
                     toast.success("Non-Profit saved!");
