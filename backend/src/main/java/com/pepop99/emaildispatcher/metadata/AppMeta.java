@@ -3,19 +3,23 @@ package com.pepop99.emaildispatcher.metadata;
 import com.pepop99.emaildispatcher.exceptions.DuplicateEmailException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 // Singleton class
 public class AppMeta {
-    // different jetty threads manipulate this set, hence should be volatile
-    public static volatile AppMeta instance = new AppMeta();
+    public static final AppMeta instance = new AppMeta();
 
     // should not be re-initialised
     private AppMeta() {
     }
 
-    public final Set<BaseMeta> meta = new HashSet<>();
+    // different jetty threads manipulate this set, hence should be volatile
+    // can also use a Hashmap of email and BaseMeta (if we want to modify some meta entry), instead of a set.
+    public volatile Set<BaseMeta> meta = new HashSet<>();
+    public volatile Map<String, ArrayList<String>> emailMap = new HashMap<>();
 
     public void insertNonProfitMeta(String email, String name, String address) throws DuplicateEmailException {
         validateEmail(email);

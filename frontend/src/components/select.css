@@ -1,0 +1,60 @@
+.Select {
+    width: 300px;
+}
+
+.Select__control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: none;
+
+    &:hover {
+        border-color: #aaa;
+    }
+}
+
+.Select__placeholder {
+    color: #999;
+}
+
+.Select__indicator {
+    color: #555;
+}
+
+.Select__menu {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Select__option {
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+}
+
+.Select__single-value {
+    color: #333;
+}
+
+.Select__value-container {
+    padding: 0 8px;
+}
+
+.Select__multi-value {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: 2px;
+}
+
+.Select__multi-value__label {
+    color: #555;
+}
+
+.Select__clear-indicator {
+    color: #999;
+}
