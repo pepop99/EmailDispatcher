@@ -11,12 +11,12 @@ const ComposeEmailPage = () => {
     const [selectedNonProfits, setSelectedNonProfits] = useState([]);
     const onSubmit = () => {
         let validFoundation = true;
-        if (selectedFoundation instanceof Array && selectedFoundation.length == 0) {
+        if (selectedFoundation instanceof Array && selectedFoundation.length === 0) {
             toast.error("Please select a Foundation");
             validFoundation = false;
         }
         let validNonProfit = true;
-        if (selectedNonProfits.length == 0) {
+        if (selectedNonProfits.length === 0) {
             toast.error("Please select atleast 1 Non-Profit");
             validNonProfit = false;
         }

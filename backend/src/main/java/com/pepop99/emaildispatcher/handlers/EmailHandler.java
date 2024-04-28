@@ -1,8 +1,10 @@
 package com.pepop99.emaildispatcher.handlers;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.pepop99.emaildispatcher.metadata.AppMeta;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +52,11 @@ public class EmailHandler extends BaseHandler {
                         emails.addAll(AppMeta.instance.emailMap.get(nonprofitEmail));
                     }
                 }
-                respond(emails.toString(), httpServletResponse, 200);
+                final JsonArray jsonArray = new JsonArray();
+                for (String email : emails) {
+                    jsonArray.add(new JsonPrimitive(email));
+                }
+                respond(jsonArray.toString(), httpServletResponse, 200);
             }
             default -> respond("Invalid request", httpServletResponse, 404);
         }

@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import DropDown from '../components/dropdown';
 import axios from 'axios';
+import Table from '../components/table';
 
 
 const ViewSentEmailsPage = () => {
     const [selectedNonProfits, setSelectedNonProfits] = useState([]);
+    const handleSetSelectedNonProfits = (data) => {
+        setSelectedNonProfits(data);
+        setEmails([]);
+    }
     const [emails, setEmails] = useState([]);
     const handleSubmit = (e) => {
         e.preventDefault();
     };
     const onSubmit = () => {
         let validNonProfit = true;
-        if (selectedNonProfits.length == 0) {
+        if (selectedNonProfits.length === 0) {
             toast.error("Please select atleast 1 Non-Profit");
             validNonProfit = false;
         }
@@ -35,10 +40,8 @@ const ViewSentEmailsPage = () => {
         axios(config)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
-                    console.log(response.data instanceof Array);
-                    // setEmails(response.data);
-                    // setSelectedNonProfits([]);
+                    setEmails(response.data);
+                    toast.success("Email list populated");
                 }
             })
             .catch(error => {
@@ -52,16 +55,11 @@ const ViewSentEmailsPage = () => {
             <h2>View Sent Emails</h2>
             <form onSubmit={handleSubmit}>
                 <label>Non-Profits:</label>
-                <DropDown url={"http://localhost:8080/meta/read/np"} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={setSelectedNonProfits} />
+                <DropDown url={"http://localhost:8080/meta/read/np"} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={handleSetSelectedNonProfits} />
                 <br />
                 <button type="submit" onClick={onSubmit}>View</button>
-                <ul>
-                    {/* Use map to render each item in the array */}
-                    {emails.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                </ul>
             </form>
+            <Table data={emails} />
         </div>
     );
 };
