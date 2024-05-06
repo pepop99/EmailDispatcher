@@ -1,6 +1,7 @@
 package com.pepop99.emaildispatcher;
 
 import com.pepop99.emaildispatcher.handlers.BaseHandler;
+import com.pepop99.emaildispatcher.handlers.CSVHandler;
 import com.pepop99.emaildispatcher.handlers.EmailHandler;
 import com.pepop99.emaildispatcher.handlers.MetadataHandler;
 import org.eclipse.jetty.server.Connector;
@@ -32,6 +33,7 @@ public class Servlet {
         ArrayList<Handler> handlers = new ArrayList<>();
         handlers.add(createContextHandler(new MetadataHandler(), "/meta"));
         handlers.add(createContextHandler(new EmailHandler(), "/email"));
+        handlers.add(createContextHandler(new CSVHandler(), "/csv"));
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(handlers.toArray(Handler[]::new));
         HttpConfiguration httpConfig = new HttpConfiguration();

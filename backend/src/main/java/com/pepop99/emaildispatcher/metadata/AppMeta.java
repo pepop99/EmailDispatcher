@@ -20,6 +20,7 @@ public class AppMeta {
     // can also use a Hashmap of email and BaseMeta (if we want to modify some meta entry), instead of a set.
     public volatile Set<BaseMeta> meta = new HashSet<>();
     public volatile Map<String, ArrayList<String>> emailMap = new HashMap<>();
+    public volatile ArrayList<GrantMeta> grantsArrayList = new ArrayList<>();
 
     public void insertNonProfitMeta(String email, String name, String address) throws DuplicateEmailException {
         validateEmail(email);

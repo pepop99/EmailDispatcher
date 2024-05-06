@@ -14,4 +14,6 @@ public class APIHandlerConstants {
     public static final String NONPROFITS = "np";
     public static final String CC = "cc";
     public static final String BCC = "bcc";
+    public static final String URI_CSV_UPLOAD = "/csv/upload";
+    public static final String URI_CSV_FETCH = "/csv/fetch";
 }
