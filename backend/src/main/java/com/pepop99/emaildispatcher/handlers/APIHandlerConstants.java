@@ -12,4 +12,6 @@ public class APIHandlerConstants {
     public static final String URI_VIEW_EMAIL = "/email/view";
     public static final String FOUNDATION = "fd";
     public static final String NONPROFITS = "np";
+    public static final String CC = "cc";
+    public static final String BCC = "bcc";
 }

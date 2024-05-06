@@ -28,13 +28,15 @@ public class EmailHandler extends BaseHandler {
                 final String body = readAsString(httpServletRequest);
                 JsonElement jsonElement = JsonParser.parseString(body);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
+                final String cc = jsonObject.get(APIHandlerConstants.CC).getAsString();
+                final String bcc = jsonObject.get(APIHandlerConstants.BCC).getAsString();
                 JsonObject fd = jsonObject.getAsJsonObject(APIHandlerConstants.FOUNDATION);
                 final String foundationEmail = getValue(fd, "email");
                 for (JsonElement element : jsonObject.get(APIHandlerConstants.NONPROFITS).getAsJsonArray()) {
                     final String nonprofitEmail = getValue(element.getAsJsonObject(), "email");
                     final String nonprofitName = getValue(element.getAsJsonObject(), "name");
                     final String nonprofitAddress = getValue(element.getAsJsonObject(), "address");
-                    String emailMessage = String.format("Email from Foundation: %s. Sending money to nonprofit %s(%s) at address %s on %s %s.%n", foundationEmail, nonprofitName, nonprofitEmail, nonprofitAddress, currentDate, currentTime);
+                    String emailMessage = String.format("cc: %s \nbcc: %s \nEmail from Foundation: %s. Sending money to nonprofit %s(%s) at address %s on %s %s.%n", cc, bcc, foundationEmail, nonprofitName, nonprofitEmail, nonprofitAddress, currentDate, currentTime);
                     AppMeta.instance.emailMap.computeIfAbsent(nonprofitEmail, s1 -> new ArrayList<>()).add(emailMessage);
                     // use some external api to send email (Sendgrid).
                     System.out.printf(emailMessage);

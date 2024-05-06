@@ -11,6 +11,9 @@ const ComposeEmailPage = () => {
     };
     const [selectedFoundation, setSelectedFoundation] = useState([]);
     const [selectedNonProfits, setSelectedNonProfits] = useState([]);
+    const [carbonCopy, setCarbonCopy] = useState("");
+    const [blackCarbonCopy, setBlackCarbonCopy] = useState("");
+
     const onSubmit = () => {
         let validFoundation = true;
         if (selectedFoundation instanceof Array && selectedFoundation.length === 0) {
@@ -35,7 +38,9 @@ const ComposeEmailPage = () => {
             },
             data: {
                 'fd': selectedFoundation,
-                'np': selectedNonProfits
+                'np': selectedNonProfits,
+                'cc': carbonCopy,
+                'bcc': blackCarbonCopy
             }
         };
         axios(config)
@@ -44,6 +49,8 @@ const ComposeEmailPage = () => {
                     toast.success("Email sent");
                     setSelectedFoundation([]);
                     setSelectedNonProfits([]);
+                    setCarbonCopy("");
+                    setBlackCarbonCopy("");
                 }
             })
             .catch(error => {
@@ -61,6 +68,22 @@ const ComposeEmailPage = () => {
                 <br />
                 <label>Non-Profits:</label>
                 <DropDown url={`${API_ENDPOINT}/meta/read/np`} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={setSelectedNonProfits} />
+                <br />
+                <label>cc:</label>
+                <input
+                    type="email"
+                    id="cc"
+                    value={carbonCopy}
+                    onChange={(e) => setCarbonCopy(e.target.value)}
+                />
+                <br />
+                <label>bcc:</label>
+                <input
+                    type="email"
+                    id="bcc"
+                    value={blackCarbonCopy}
+                    onChange={(e) => setBlackCarbonCopy(e.target.value)}
+                />
                 <br />
                 <button type="submit" onClick={onSubmit}>Send Email</button>
             </form>
