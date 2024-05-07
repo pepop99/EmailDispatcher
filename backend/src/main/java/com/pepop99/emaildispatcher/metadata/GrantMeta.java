@@ -1,26 +1,15 @@
 package com.pepop99.emaildispatcher.metadata;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-@AllArgsConstructor
+@Getter
+@Setter
 public class GrantMeta {
-    final private GrantType grantType;
-    final private ArrayList<String> tags;
-    final private String nonProfitLegalName;
-    final private String grantSubmissionName;
-    final private String Stage;
-    final private String foundationOwner;
-    final private int requestedAmount;
-    final private int rewardedAmount;
-    final private String durationStart;
-    final private String durationEnd;
-    private final String additionalFileFolderPath;
-    private final String grandSubmissionId;
+    private GrantType grantType;
+    private String[] tags;
+    private final HashMap<String, String> otherData = new HashMap<>();
 }
 
-enum GrantType {
-    OPERATING_GRANT,
-    PROJECT_GRANT
-}
