@@ -1,6 +1,6 @@
 // Table.js
 import React from 'react';
-import './table.css'; // Import CSS file for styling
+import './table.css';
 
 const Table = ({ data }) => {
     return (

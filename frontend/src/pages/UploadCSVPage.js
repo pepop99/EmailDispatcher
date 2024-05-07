@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import DropDown from '../components/dropdown';
 import axios from 'axios';
-import Table from '../components/table';
+import Table from 'rc-table';
+import '../components/table.css';
+
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 const UploadCSVPage = () => {
@@ -24,7 +25,6 @@ const UploadCSVPage = () => {
                 'Content-Type': 'multipart/form-data'
             },
             data: formData
-            // formData: formData
         };
         axios(config)
             .then(response => {

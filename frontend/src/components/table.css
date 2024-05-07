@@ -27,3 +27,34 @@
 .table tbody tr:hover {
     background-color: #ddd;
 }
+
+.rc-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.rc-table thead th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.rc-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.rc-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.rc-table tbody td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tableContainerDiv {
+    overflow: auto;
+    margin: 20px;
+}

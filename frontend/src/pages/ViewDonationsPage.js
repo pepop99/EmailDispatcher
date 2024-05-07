@@ -1,47 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import DropDown from '../components/dropdown';
 import axios from 'axios';
-import Table from '../components/table';
+import Table from 'rc-table';
+import '../components/table.css';
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 const ViewDonationsPage = () => {
-    const [selectedNonProfits, setSelectedNonProfits] = useState([]);
-    const handleSetSelectedNonProfits = (data) => {
-        setSelectedNonProfits(data);
-        setEmails([]);
-    }
-    const [emails, setEmails] = useState([]);
+    const [headers, setHeaders] = useState([]);
+    const [tableData, setTableData] = useState([]);
     const handleSubmit = (e) => {
         e.preventDefault();
     };
     const onSubmit = () => {
-        let validNonProfit = true;
-        if (selectedNonProfits.length === 0) {
-            toast.error("Please select atleast 1 Non-Profit");
-            validNonProfit = false;
-        }
-        if (validNonProfit) {
-            setEmails([]);
-            getEmails();
-        }
-    }
-    const getEmails = () => {
         var config = {
-            method: 'post',
-            url: `${API_ENDPOINT}/email/view`,
+            method: 'get',
+            url: `${API_ENDPOINT}/csv/fetch`,
             headers: {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'application/json'
             },
-            data: {
-                'np': selectedNonProfits
-            }
         };
         axios(config)
             .then(response => {
                 if (response.status === 200) {
-                    setEmails(response.data);
-                    toast.success("Email list populated");
+                    parseAndSetHeaders(response.data.headers);
+                    setTableData(response.data.data);
                 }
             })
             .catch(error => {
@@ -49,17 +31,33 @@ const ViewDonationsPage = () => {
                     toast.error(error.response.data);
                 }
             });
-    };
+    }
+    const parseAndSetHeaders = (headers) => {
+        var tempHeaders = headers.replace(/[\[\]']+/g, '');
+        var headerArray = tempHeaders.split(",");
+        var tableHeaderArray = [];
+        headerArray.forEach((element) => {
+            var trimmedElement = element.trim();
+            var obj = {
+                title: trimmedElement,
+                dataIndex: trimmedElement,
+                key: trimmedElement,
+            }
+            tableHeaderArray.push(obj);
+        });
+        setHeaders(tableHeaderArray);
+
+    }
+
     return (
         <div>
-            <h2>View Sent Emails</h2>
+            <h2>Donations</h2>
             <form onSubmit={handleSubmit}>
-                <label>Non-Profits:</label>
-                <DropDown url={`${API_ENDPOINT}/meta/read/np`} label={"name"} isMulti={true} selectedOptions={selectedNonProfits} setSelectedOptions={handleSetSelectedNonProfits} />
-                <br />
-                <button type="submit" onClick={onSubmit}>View</button>
+                <button type="submit" onClick={onSubmit}>View Donations</button>
             </form>
-            <Table data={emails} />
+            <div className='tableContainerDiv'>
+                {headers.length !== 0 ? <Table columns={headers} data={tableData} /> : null}
+            </div>
         </div>
     );
 };
