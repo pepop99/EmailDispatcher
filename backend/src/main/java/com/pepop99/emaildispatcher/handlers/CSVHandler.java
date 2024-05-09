@@ -5,6 +5,7 @@ import com.pepop99.emaildispatcher.metadata.AppMeta;
 import com.pepop99.emaildispatcher.metadata.GrantMeta;
 import com.pepop99.emaildispatcher.metadata.GrantType;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +40,12 @@ public class CSVHandler extends BaseHandler {
                             readCSV(uploadedFile);
                         }
                     }
+                } catch (FileUploadException e) {
+                    respond("Error uploading file", httpServletResponse, 500);
+                    throw new RuntimeException(e);
+                } catch (IllegalArgumentException e) {
+                    respond(e.getMessage(), httpServletResponse, 500);
+                    throw new RuntimeException(e);
                 } catch (Exception e) {
                     respond("Error parsing CSV", httpServletResponse, 500);
                     throw new RuntimeException(e);
@@ -77,7 +84,7 @@ public class CSVHandler extends BaseHandler {
         try {
             grantMeta.setGrantType(GrantType.valueOf(data));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Illegal grant type specified in CSV", e);
+            throw new IllegalArgumentException("Illegal grant type " + data + " specified in CSV", e);
         }
     }
 }
